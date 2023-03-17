@@ -1,0 +1,20 @@
+server:
+  port: 9094
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    name: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: admin
+    password: root
+    driverClassName: org.postgresql.Driver
+  application:
+    name: job-service
+eureka:
+  instance:
+    hostname: localhost
+
+

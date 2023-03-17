@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    name: test-case
+    url: jdbc:postgresql://localhost:5432/testData
+    username: admin
+    password: root
+    driverClassName: org.postgresql.Driver
+  application:
+    name: job-service
+eureka:
+  instance:
+    hostname: localhost
+
+
