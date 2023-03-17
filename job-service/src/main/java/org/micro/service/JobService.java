@@ -9,4 +9,6 @@ public interface JobService {
 
 
     PageResponse<JobDTO> getAllJobs(Pageable pageable);
+
+    PageResponse<JobDTO> getJobsByUserId(Pageable pageable, Long userId);
 }

@@ -28,4 +28,9 @@ public class JobController {
     public ResponseEntity<?> getAllJobs(@PageableDefault Pageable pageable){
         return ResponseEntity.ok(jobService.getAllJobs(pageable));
     }
+
+    @GetMapping("get/{userId}")
+    public ResponseEntity<?> getByUserId (@PageableDefault Pageable pageable, @PathVariable Long userId){
+        return  ResponseEntity.ok(jobService.getJobsByUserId(pageable,userId));
+    }
 }

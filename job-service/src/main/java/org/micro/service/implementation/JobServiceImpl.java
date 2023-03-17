@@ -92,7 +92,35 @@ public class JobServiceImpl implements JobService {
             for (Jobs item :jobEntity){
                  dto = new JobDTO(item);
                 Optional<JobLocation> locationEntity = jobLocationRepository.findByJobId(item.getId());
-                if(locationEntity!= null){
+                if(locationEntity.isPresent()){
+                    dto.setJobLocation(new JobLocationDTO(locationEntity.get()));
+                }
+                List<CompanyPersonDetails> personDetailslist = companyPersonDetailsRepository.findAllByJobId(item.getId());
+                if(Utils.isValidList(personDetailslist)){
+                    JobDTO finalDto = dto;
+                    personDetailslist.stream().forEach(person -> {
+                        finalDto.setCompanyPersonDetails(new CompanyPersonDetailsDTO(person));
+                    });
+                }
+                dtoList.add(dto);
+            }
+        }
+        NativeQuery countResult = getCurrentSession().createNativeQuery(countQuery);
+        Long count = (Long) countResult.getSingleResult();
+        return new PageResponse<>(new PageImpl<>(dtoList, pageable, count.intValue()));
+    }
+
+    @Override
+    public PageResponse<JobDTO> getJobsByUserId(Pageable pageable, Long userId) {
+        String countQuery = JobsQueryUtils.getJobCountByUserIdQuery(userId);
+        List<Jobs> jobEntity = jobsRepository.getJobsByUserId(userId);
+        List<JobDTO> dtoList = new ArrayList<>();
+        JobDTO dto = new JobDTO();
+        if(Utils.isValidList(jobEntity)){
+            for(Jobs item :jobEntity){
+                dto = new JobDTO(item);
+                Optional<JobLocation> locationEntity = jobLocationRepository.findByJobId(item.getId());
+                if(locationEntity.isPresent()){
                     dto.setJobLocation(new JobLocationDTO(locationEntity.get()));
                 }
                 List<CompanyPersonDetails> personDetailslist = companyPersonDetailsRepository.findAllByJobId(item.getId());
