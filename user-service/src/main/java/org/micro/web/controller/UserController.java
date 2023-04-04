@@ -1,6 +1,8 @@
 package org.micro.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.micro.entity.Menu;
+import org.micro.web.dto.MenuItalianDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,15 +36,26 @@ public class UserController {
         UserDTO response = usersService.getById(id);
         if(response != null){
             response.setPassword("");
-
-            Boolean result = webClient.get()
-                    .uri("http://localhost:9094/job-api/get/{userId}",id)
-                    .retrieve()
-                    .bodyToMono(Boolean.class)
-                    .block();
+//            Boolean result = webClient.get()
+//                    .uri("http://localhost:9094/job-api/get/{userId}",id)
+//                    .retrieve()
+//                    .bodyToMono(Boolean.class)
+//                    .block();
             
         return new ResponseEntity<>(response, HttpStatus.OK);
         }
         return ResponseEntity.badRequest().body(" user not found");
+    }
+
+    @PostMapping("create/menu")
+    public ResponseEntity<?> createMenu(@RequestBody Menu entity){
+        Menu response = usersService.createMenu(entity);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("get-all/menu")
+    public ResponseEntity<?> getItalianMenu(){
+        List<MenuItalianDTO> response = usersService.getMenuTypeAndItems();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

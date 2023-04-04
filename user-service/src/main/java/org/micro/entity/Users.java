@@ -29,4 +29,8 @@ public  class Users {
     private String password;
     @Column(name = "role")
     private String role;
+    @Column(name = "position")
+    private String position;
+    @Column(name ="about")
+    private  String about;
 }

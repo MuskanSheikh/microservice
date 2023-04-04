@@ -18,6 +18,8 @@ public class UserDTO {
     private String phone;
     private String password;
     private String role;
+    private String position;
+    private  String about;
 
     public UserDTO(Users entity) {
         this.id = entity.getId();
@@ -27,5 +29,7 @@ public class UserDTO {
         this.phone= entity.getPhone();
         this.password = entity.getPassword();
         this.role = entity.getRole();
+        this.position = entity.getPosition();
+        this.about = entity.getAbout();
     }
 }
